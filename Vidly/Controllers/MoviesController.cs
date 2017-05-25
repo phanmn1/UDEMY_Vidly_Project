@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +11,19 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+
+        private ApplicationDbContext _context; 
         // GET: Movies/Random
+
+        public MoviesController ()
+        {
+            _context = new ApplicationDbContext(); 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
         public ActionResult Random()
         {
             var movie = new Movie() { Name = "Shreak!" };
@@ -77,9 +90,25 @@ namespace Vidly.Controllers
                 Movies = movielist
             }; */
 
-            var movies = GetMovies();
+            //var movies = _context.Movies.Include(g => g.Genre).ToList();
+            var movies = _context.Movies.Include(g => g.Genre).ToList();
 
-            return View(movies);
+            //return View(movies);
+            return View(movies); 
+        }
+
+        public ActionResult Details (int id)
+        {
+            var movie = _context
+                        .Movies
+                        .Include(g => g.Genre)
+                        .SingleOrDefault(m => m.id == id);
+            if(movie == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(movie); 
         }
 
         private IEnumerable<Movie> GetMovies()

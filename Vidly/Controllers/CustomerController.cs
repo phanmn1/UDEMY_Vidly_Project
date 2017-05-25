@@ -81,6 +81,7 @@ namespace Vidly.Controllers
             }; */
 
             var customer = _context.Customers
+                           .Include(c=> c.MembershipType)
                            .SingleOrDefault(c => c.Id == id);//single or default already queries database
 
             if (customer == null)

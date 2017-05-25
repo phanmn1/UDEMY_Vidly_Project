@@ -14,6 +14,9 @@ namespace Vidly.Models
         [StringLength(255)]
         public string Name { get; set; }
 
+        //? before variable declaration makes it nullable? 
+        public DateTime? Birthdate { get; set;  }
+
         public bool IsSubscribedtoNewsLetter { get; set; }
         public MembershipType MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }

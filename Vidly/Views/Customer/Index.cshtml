@@ -24,7 +24,7 @@
     <tr>
         @*<td><a href="/customers/Details/@customer.Id">@customer.Name</a></td>*@
         <td>@Html.ActionLink(customer.Name, "Details", "Customer", new { id = customer.Id }, null)</td>
-        <td>@customer.MembershipType.DiscountRate%</td>
+        <td>@customer.MembershipType.Name</td>
     </tr>
 }
     </tbody>
