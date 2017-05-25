@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity; 
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,18 @@ namespace Vidly.Controllers
 {
     public class CustomerController : Controller
     {
+
+        private ApplicationDbContext _context; 
+
+        public CustomerController()
+        {
+            _context = new ApplicationDbContext(); 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose(); 
+        }
         // GET: Customer
         //[Route("Customers/")]
         public ActionResult Index()
@@ -26,7 +39,10 @@ namespace Vidly.Controllers
             };
 
             */
-            var customerlist = GetCustomers();
+            //Customers Property is a context in DBSet so we can get all 
+            //customers in the database
+            var customerlist = _context.Customers.Include(c => c.MembershipType).ToList(); 
+                //GetCustomers();
             
             return View(customerlist);
         }
@@ -64,8 +80,8 @@ namespace Vidly.Controllers
                 Customers = customers
             }; */
 
-            var customer = GetCustomers()
-                           .SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers
+                           .SingleOrDefault(c => c.Id == id);//single or default already queries database
 
             if (customer == null)
             {
