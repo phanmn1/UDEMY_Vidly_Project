@@ -252,6 +252,14 @@
     <Compile Include="Migrations\201705250443269_UpdateDateStringMovie.Designer.cs">
       <DependentUpon>201705250443269_UpdateDateStringMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705260012280_ChangedReleaseDateType.cs" />
+    <Compile Include="Migrations\201705260012280_ChangedReleaseDateType.Designer.cs">
+      <DependentUpon>201705260012280_ChangedReleaseDateType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705261814401_ChangedGenreToRequired.cs" />
+    <Compile Include="Migrations\201705261814401_ChangedGenreToRequired.Designer.cs">
+      <DependentUpon>201705261814401_ChangedGenreToRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -262,6 +270,8 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\NewCustomerFormViewModel.cs" />
+    <Compile Include="ViewModels\NewMovieFormViewModel.cs" />
     <Compile Include="ViewModels\RandomMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +337,8 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Movies\Details.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
+    <Content Include="Views\Customer\CustomerForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -389,6 +400,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705250443269_UpdateDateStringMovie.resx">
       <DependentUpon>201705250443269_UpdateDateStringMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260012280_ChangedReleaseDateType.resx">
+      <DependentUpon>201705260012280_ChangedReleaseDateType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705261814401_ChangedGenreToRequired.resx">
+      <DependentUpon>201705261814401_ChangedGenreToRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

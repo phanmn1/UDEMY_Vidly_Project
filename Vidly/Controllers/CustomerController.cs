@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
-//using Vidly.ViewModels;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -92,6 +92,57 @@ namespace Vidly.Controllers
 
 
             return View(customer); 
+        }
+
+        public ActionResult New()
+        {
+            var membershiptypes = _context.MembershipTypes.ToList();
+            var viewModel = new NewCustomerFormViewModel
+            {
+                MembershipTypes = membershiptypes,
+            };
+            return View("CustomerForm", viewModel); 
+        }
+
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            if (customer.Id == 0)
+                _context.Customers.Add(customer);
+            else
+            {
+                var customerInDB = _context.Customers.Single(c => c.Id == customer.Id);
+
+                //2 Methods to update 
+                //Opens up security holes in applications b/c it updates all properties 
+                //TryUpdateModel(customerInDB, "", new string[] { "Name", "Email" }); 
+
+                //Mapper.Map(customer, customerInDb); 
+
+                customerInDB.Name = customer.Name;
+                customerInDB.Birthdate = customer.Birthdate;
+                customerInDB.MembershipTypeId = customer.MembershipTypeId;
+                customerInDB.IsSubscribedtoNewsLetter = customer.IsSubscribedtoNewsLetter; 
+            }
+           
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customer"); 
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id); 
+            if (customer == null)
+                return HttpNotFound();
+
+            var viewModel = new NewCustomerFormViewModel
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+
+            return View("CustomerForm", viewModel);
         }
 
         private IEnumerable<Customer> GetCustomers()

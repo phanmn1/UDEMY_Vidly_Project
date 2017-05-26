@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -50,9 +51,53 @@ namespace Vidly.Controllers
            // return RedirectToAction("Index", "Home", new { page = 1, sortBy = "name"});
         } 
 
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.id == movie.id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.GenreId = movie.GenreId;
+                movieInDb.NumberInStock = movie.NumberInStock;
+            }
+                _context.SaveChanges();
+            
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult New()
+        {
+            var genreList = _context.Genres.ToList();
+
+            var viewModel = new NewMovieFormViewModel
+            {
+                Genres = genreList
+            };
+            return View("MovieForm", viewModel); 
+        }
+
         public ActionResult Edit(int id)
         {
-            return Content("id=" + id);
+            var movie = _context.Movies.Single(m => m.id == id);
+            if(movie == null)
+                return HttpNotFound();
+
+            var viewModel = new NewMovieFormViewModel
+            {
+                Movie = movie,
+                Genres = _context.Genres.ToList()
+            };
+
+
+            return View("MovieForm", viewModel);
         }
 
         [Route("movies/released/{year}/{month:regex(\\d{2}):range(1, 12)}")]
