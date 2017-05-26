@@ -10,12 +10,13 @@ namespace Vidly.Models
     {
         public int Id { get; set; }
 
-        [Required] //Column name will no longer be nullable
+        [Required(ErrorMessage ="Please enter customer's name.")] //Column name will no longer be nullable
         [StringLength(255)]
         public string Name { get; set; }
 
         //? before variable declaration makes it nullable? 
         [Display(Name="Date of Birth")]
+        [Min18YearsIfAMember]
         public DateTime? Birthdate { get; set;  }
 
         public bool IsSubscribedtoNewsLetter { get; set; }
