@@ -41,10 +41,11 @@ namespace Vidly.Controllers
             */
             //Customers Property is a context in DBSet so we can get all 
             //customers in the database
-            var customerlist = _context.Customers.Include(c => c.MembershipType).ToList(); 
-                //GetCustomers();
-            
-            return View(customerlist);
+            //var customerlist = _context.Customers.Include(c => c.MembershipType).ToList(); 
+            //GetCustomers();
+
+            //return View(customerlist);
+            return View();
         }
 
 

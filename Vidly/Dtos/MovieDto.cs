@@ -15,7 +15,7 @@ namespace Vidly.Dtos
         public string Name { get; set; }
 
 
-        //public Genre Genre { get; set; }
+        public GenreDto Genre { get; set; }
 
         [Required]
         //[Display(Name = "Release Date")]
